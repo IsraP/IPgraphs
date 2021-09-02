@@ -34,38 +34,40 @@ public:
         size++;
     }
 
-    void removeOut(int label)
+    bool contains(int labelCheck)
     {
-        for (int i = 0; i < size; i++)
+        int cont = 0;
+        for (int i = 0; i < size && cont != size; i++)
         {
-            if (out[i]->label == label)
-                out[i]->label = -1;
+            if (out[i]->label == labelCheck)
+                return true;
         }
+        return false;
     }
 
     void printAllOut()
     {
         int cont = 0;
         for (int i = 0; i < size && cont != size; i++)
-            if (out[i]->label != -1)
-            {
-                cont++;
-                cout << out[i]->label << " ";
-            }
+        {
+            cont++;
+            cout << out[i]->label << " ";
+        }
     }
 };
 
-class GrafoDNP
+class GrafoNDNP
 {
 public:
     Vertice *vertices[100];
     int size;
 
-    GrafoDNP()
+    GrafoNDNP()
     {
+        size = 0;
     }
 
-    GrafoDNP(int newSize)
+    GrafoNDNP(int newSize)
     {
         for (int i = 0; i < newSize; i++)
             addVertice(i);
@@ -85,7 +87,11 @@ public:
             size++;
         }
 
-        vertices[labelIn]->addOut(labelOut);
+        if (!vertices[labelIn]->contains(labelOut))
+            vertices[labelIn]->addOut(labelOut);
+
+        if (!vertices[labelOut]->contains(labelIn))
+            vertices[labelOut]->addOut(labelIn);
     }
 
     void addVertice(int label)
@@ -95,23 +101,6 @@ public:
             vertices[label] = new Vertice(label);
 
             size++;
-        }
-    }
-
-    void removeVertice(int label)
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            if (vertices[i] != nullptr)
-            {
-                if (vertices[i]->label == label)
-                {
-                    vertices[i] = nullptr;
-                    size--;
-                }
-                else
-                    vertices[i]->removeOut(label);
-            }
         }
     }
 
@@ -133,15 +122,14 @@ public:
 
 int main(void)
 {
-    GrafoDNP *gdnp = new GrafoDNP(5);
+    GrafoNDNP *gndnp = new GrafoNDNP(5);
 
-    gdnp->addVertice(0, 1);
-    gdnp->addVertice(0, 2);
-    gdnp->addVertice(1, 2);
-    gdnp->addVertice(1, 3);
-    gdnp->addVertice(2, 1);
+    gndnp->addVertice(0, 1);
+    gndnp->addVertice(0, 2);
+    gndnp->addVertice(1, 2);
+    gndnp->addVertice(1, 3);
 
-    gdnp->printGrafo();
+    gndnp->printGrafo();
 
     return 0;
 }
