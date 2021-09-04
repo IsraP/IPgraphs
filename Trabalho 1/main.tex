@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+
+\usepackage{indentfirst}
+
+\usepackage{abntex2cite}
+
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{lipsum}
+%\usepackage[brazil]{babel}   
+\sloppy
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{}
+\rhead{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0pt}
+
+\lstset{language=C++,
+             basicstyle=\footnotesize,
+             numbers=left,
+             numberstyle=\footnotesize,
+             frame=shadowbox}
+
+\title{
+  Assignment 01
+ }
+ \author{
+ \\ \\ \\Israel P. O. Leandro, Raíssa G. L. Carvalho
+ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
+ }
+
+\address{
+ICEI - Instituto de Ciências Exatas e Informática -
+\\ Pontifícia Universidade Católica de Minas Gerais (PUC Minas)
+\\ \\ \\ \\  \textbf{Belo Horizonte - Minas Gerais} 
+\\ \textbf{2021}
+}
+
+\begin{document} 
+\maketitle
+\pagebreak
+
+\tableofcontents
+
+\clearpage
+\pagebreak
+
+\section{QUESTION 01}
+
+Algoritmos baseados em grafos são usados em diversas áreas para auxiliar nas resoluções de inúmeros problemas em
+processamento de imagens, redes de computadores, redes sociais, dentre outros. Para tanto, faz-se necessário que o grafo
+seja implementado de forma adequada e adaptado ao problema que se deseja resolver. Neste sentido, os seguintes tipos de
+grafos deverão ser implementados uma vez que eles estariam diretamente associados aos problemas que se deseja resolver:
+
+\subsection{Grafo direcionado não-ponderado}
+Para implementar o Grafo direcionado não-ponderado, foi utilizado a estrutura em listas de adjacência. Para tal, foram implementadas 2 classes: \textbf{Vértice} e \textbf{Grafo}. \\
+Primeiramente, a classe \textbf{Vértice} é a responsável por salvar o conteúdo e os vértices adjacentes de um vértice em específico. A estrutura de dados possui dois construtores, sendo o primeiro um construtor vazio e o outro um construtor que já instancia o conteúdo do vértice, caso específicado. Além disso, ela possuí dois métodos addOut(), um deles passando um vértice e outro passando o conteúdo de um vértice, para que o mesmo seja criado dentro da função. Esses métodos são responsáveis por adicionar relações entre 2 vértices (arestas). Por fim, foi feito um método printAllOut(), que mostra a lista de adjacência de um vértice.
+
+\begin{lstlisting}[language = C++]
+class Vertice{
+
+public:
+    int label;
+    int size;
+    Vertice *out[];
+
+    Vertice() { ... }
+    
+    Vertice(int label) { ... }
+    
+    void addOut (Vertice *v) { ... }
+    
+    void addOut (int label) { ... }
+    
+    void printAllOut { ... }
+};
+\end{lstlisting}
+
+Em segundo lugar, a classe \textbf{Grafo} é a responsável por adicionar e mostrar todos os vértices. A estrutura de dados também possui dois construtores, um vazio e outro que instancia uma quantidade X de vértices, passada como paramêtro. Além disso, ele possui dois métodos addVertice(), um passando o vértice principal da relação junto com o vértice do destino, criando então vértices caso os valores passados não existam no grafo e unindo os dois, e outro passando somente o vértice principal para a criação de um novo vértice. Por fim, foi feito um método printGrafo, que é responsável por mostrar a lista de adjacência de todos os vértices no grafo. \\ \\ \\ 
+
+\begin{lstlisting}[language = C++]
+class GrafoDNP
+{
+public:
+    Vertice *vertices[100];
+    int size;
+    
+    GrafoDNP() { ... }
+    
+    GrafoDNP(int newSize) { ... }
+    
+    void addVertice(int labelIn, int labelOut) { ... }
+    
+    void addVertice(int label) { ... }
+    
+    void printGrafo() { ... }
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[]
+Exemplo de saida do programa:
+0-> 1 2 
+1-> 2 3 
+2-> 1 
+3-> 
+4-> 
+\end{lstlisting}
+
+
+\subsection{Grafo não-direcionado não-ponderado}
+Para implementar o Grafo não-direcionado não-ponderado, assim como o anterior, foram implementadas duas classes, a classe \textbf{Vértice} e a classe \textbf{Grafo}, também usando a estrutura de lista de adjacência. As duas classes implementadas são extremamente similares as classes do \textbf{grafo direcionado não-ponderado}. \\
+Primeiramente, referente a classe \textbf{Vértice}, seu funcionamento é o mesmo da ultima, porém com algumas modificações. A classe agora possui um método contains(), que passa um inteiro a ser procurado na lista de adjacência do vértice, retornando true caso o mesmo seja encontrado e false caso contrário.
+
+\begin{lstlisting}[language = C++]
+class GrafoDNP
+{
+public:
+    Vertice *vertices[100];
+    int size;
+    
+    GrafoDNP() { ... }
+    
+    GrafoDNP(int newSize) { ... }
+    
+    void addVertice(int labelIn, int labelOut) { ... }
+    
+    void addVertice(int label) { ... }
+    
+    void contains(int labelCheck) { ... }
+    
+    void printGrafo() { ... }
+}
+
+\end{lstlisting}
+
+Em segundo lugar, referente a classe \textbf{Grafo}, assim como a Vértice, seu funcionamento é quase igual ao da última classe, porém, agora essa foi modificada para que as arestas sejam não-direcionadas. Para isso, o método addVertice(), que recebia como paramêtros dois inteiros representando os vértices, agora adiciona relações nos dois vértices passados, além de realizar uma verificação para evitar duplicatas. O método printGrafo() não precisou de modificações, visto que ele meramente imprime a lista de adjacência dos vértices.
+
+\begin{lstlisting}[]
+Exemplo de saida do programa:
+0-> 1 2 
+1-> 0 2 3 
+2-> 0 1 
+3-> 1 
+4-> 
+\end{lstlisting}
+
+
+\subsection{Grafo direcionado ponderado}
+Para a implementação do Grafo direcionado ponderado, diferentemente dos grafos anteriores, foi utilizado a estrutura da matriz de adjacência. O código possui apenas uma classe denominada \textbf{Matriz} que é capaz de realizar a criação, inserção e print do nosso grafo. A partir de seus construtores é criado uma matriz preenchida pelo número zero, depois é feita a inserção dos pesos pela função addPeso que insere o peso na aresta dos vértices desejados, e por fim a matriz é percorrida e printada na tela com os pesos inseridos anteriormente. \\
+É importante ressaltar que na função addPeso foi necessário decrementar uma unidade das variáveis i e j, que representam a quantidade de vértices. O motivo pelo decremento é devido ao fato que a indexação dos vértices na matriz começa em 0, ou seja, o vértice 1 deve estar na posição 0, por isso, é necessário fazer esse ajuste antes de inserir na matriz, para evitar erros de indexação.
+
+\begin{lstlisting}[language = C++]
+void addPeso(int i,int j,int peso){
+    matriz[--i][--j] = peso;     
+}
+\end{lstlisting}
+
+Após compilar o código é apresentado a seguinte matriz na tela, na qual o número zero representa as arestas que não possuem peso:
+
+\begin{lstlisting}[]
+Exemplo de saida do programa:
+|	0	2	0	0	0	|
+|	0	0	0	24	0	|
+|	0	0	16	0	10	|
+|	0	0	32	0	0	|
+|	12	0	0	0	0	|
+\end{lstlisting}
+
+\subsection{Grafo não-direcionado ponderado}
+O grafo não-direcionado ponderado segue a mesma implementação do grafo anterior, sendo que a única modificação feita é referente ao não direcionamento das arestas. Para isto, foi mantida toda estrutura do código anterior e adicionado apenas uma linha na função addPeso, na qual faz a adição do mesmo peso nas duas arestas desejadas. Após a compilação é apresentado a seguinte matriz simétrica:
+
+\begin{lstlisting}[]
+Exemplo de saida do programa:
+|	0	2	0	0	12	|
+|	2	0	0	24	0	|
+|	0	0	16	32	10	|
+|	0	24	32	0	0	|
+|	12	0	10	0	0	|
+\end{lstlisting}
+
+\section{Considerações Finais}
+Para a realização do Assignment 1, optamos por utilizar duas estruturas diferentes para tratar grafos ponderados e não ponderados, procurando implementar o grafo da forma mais otimizada possível. Para isso, foi utilizado em grafos ponderados a matriz de adjacência, enquanto nos não-ponderados, a lista de adjacência. Os métodos de cada grafo foram comentados de modo a explicar o funcionamento e a lógica da implementação.
+
+\end{document}

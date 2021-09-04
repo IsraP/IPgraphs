@@ -6,9 +6,9 @@ class Vertice
 {
 
 public:
-    int label;
-    int size;
-    Vertice *out[];
+    int label;      // Conteúdo do vértice
+    int size;       // Contador de tamanho
+    Vertice *out[]; // Lista de adjacência do vértice
 
     Vertice()
     {
@@ -27,6 +27,7 @@ public:
         size++;
     }
 
+    // Esse método não liga o vértice principal o vértice sendo passado como parâmetro, visto que o importante era mostrar qual era a ligação, e não necessáriamente ligar os dois
     void addOut(int label)
     {
         Vertice *v = new Vertice(label);
@@ -34,24 +35,10 @@ public:
         size++;
     }
 
-    void removeOut(int label)
-    {
-        for (int i = 0; i < size; i++)
-        {
-            if (out[i]->label == label)
-                out[i]->label = -1;
-        }
-    }
-
     void printAllOut()
     {
-        int cont = 0;
-        for (int i = 0; i < size && cont != size; i++)
-            if (out[i]->label != -1)
-            {
-                cont++;
-                cout << out[i]->label << " ";
-            }
+        for (int i = 0; i < size; i++)
+            cout << out[i]->label << " ";
     }
 };
 
@@ -63,17 +50,18 @@ public:
 
     GrafoDNP()
     {
+        size = 0;
     }
 
     GrafoDNP(int newSize)
     {
-        for (int i = 0; i < newSize; i++)
+        for (int i = 0; i < newSize; i++) // Carrega o grafo inicialmente com newSize vértices
             addVertice(i);
     }
 
     void addVertice(int labelIn, int labelOut)
     {
-        if (vertices[labelIn] == nullptr)
+        if (vertices[labelIn] == nullptr) // As três próximas verificações verificam se o vértice principal, secundário e principal já foram criados, respectivamente
         {
             vertices[labelIn] = new Vertice(labelIn);
             size++;
@@ -98,29 +86,12 @@ public:
         }
     }
 
-    void removeVertice(int label)
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            if (vertices[i] != nullptr)
-            {
-                if (vertices[i]->label == label)
-                {
-                    vertices[i] = nullptr;
-                    size--;
-                }
-                else
-                    vertices[i]->removeOut(label);
-            }
-        }
-    }
-
     void printGrafo()
     {
         int cont = 0;
         for (int i = 0; i < 100 && cont != size; i++)
         {
-            if (vertices[i] != nullptr)
+            if (vertices[i] != nullptr) // Pula os vértices que não existem no vetor
             {
                 cout << vertices[i]->label << "-> ";
                 vertices[i]->printAllOut();

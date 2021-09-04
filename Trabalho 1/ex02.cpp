@@ -6,9 +6,9 @@ class Vertice
 {
 
 public:
-    int label;
-    int size;
-    Vertice *out[];
+    int label;      // Conteúdo do vértice
+    int size;       // Contador de tamanho
+    Vertice *out[]; // Lista de adjacência do vértice
 
     Vertice()
     {
@@ -27,6 +27,7 @@ public:
         size++;
     }
 
+    // Esse método não liga o vértice principal o vértice sendo passado como parâmetro, visto que o importante era mostrar qual era a ligação, e não necessáriamente ligar os dois
     void addOut(int label)
     {
         Vertice *v = new Vertice(label);
@@ -34,25 +35,20 @@ public:
         size++;
     }
 
+    // Método que retorna true caso o valor pedido tenha sido encontrado na lista de adjacência do vértice
     bool contains(int labelCheck)
     {
-        int cont = 0;
-        for (int i = 0; i < size && cont != size; i++)
-        {
+        for (int i = 0; i < size; i++)
             if (out[i]->label == labelCheck)
                 return true;
-        }
+
         return false;
     }
 
     void printAllOut()
     {
-        int cont = 0;
-        for (int i = 0; i < size && cont != size; i++)
-        {
-            cont++;
+        for (int i = 0; i < size; i++)
             cout << out[i]->label << " ";
-        }
     }
 };
 
@@ -75,7 +71,7 @@ public:
 
     void addVertice(int labelIn, int labelOut)
     {
-        if (vertices[labelIn] == nullptr)
+        if (vertices[labelIn] == nullptr) // As duas próximas verificações verificam se o vértice principal e secundário, respectivamente, já foram criados
         {
             vertices[labelIn] = new Vertice(labelIn);
             size++;
@@ -87,7 +83,7 @@ public:
             size++;
         }
 
-        if (!vertices[labelIn]->contains(labelOut))
+        if (!vertices[labelIn]->contains(labelOut)) // As duas seguintes verificações verificam se o vértice em questão possui ligação com o outro para evitar duplicatas
             vertices[labelIn]->addOut(labelOut);
 
         if (!vertices[labelOut]->contains(labelIn))
@@ -96,7 +92,7 @@ public:
 
     void addVertice(int label)
     {
-        if (vertices[label] == nullptr)
+        if (vertices[label] == nullptr) // Verifica se o vértice em questão já foi criado
         {
             vertices[label] = new Vertice(label);
 
@@ -109,7 +105,7 @@ public:
         int cont = 0;
         for (int i = 0; i < 100 && cont != size; i++)
         {
-            if (vertices[i] != nullptr)
+            if (vertices[i] != nullptr) // Pula espaços vazios no vetor
             {
                 cout << vertices[i]->label << "-> ";
                 vertices[i]->printAllOut();
